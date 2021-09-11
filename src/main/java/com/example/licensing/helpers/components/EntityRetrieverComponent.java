@@ -1,6 +1,8 @@
 package com.example.licensing.helpers.components;
 
 import com.example.licensing.entities.BaseEntity;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;

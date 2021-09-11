@@ -1,5 +1,13 @@
 package com.example.licensing.services;
 
+import com.example.licensing.entities.BaseEntity;
+import com.example.licensing.helpers.components.EventManagementComponent;
+import com.example.licensing.repositories.ServiceRepository;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+
 import java.beans.FeatureDescriptor;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
@@ -10,7 +18,7 @@ import java.util.stream.Stream;
 @Data
 public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequestBodyDTO> {
 
-    private final HeaderUtilComponent headerUtilComponent;
+
     private final ServiceRepository<E> repository;
     private final ModelMapper modelMapper;
     private final EventManagementComponent eventManagementComponent;
@@ -116,17 +124,6 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         return generateResponse(requestDTO.getHeader(), convertForRead(results));
     }
 
-    protected Specification<E> findByCriteria(SearchDTO dto) {
-        return new Specification<E>() {
-            @Override
-            public Predicate toPredicate(Root<E> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
-                // return must active row
-                predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("isDeleted"), "No")));
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        };
-    }
 
     private E getByOid(@NonNull String oid) {
         return getOptionalEntity(oid).orElseThrow(() -> new ServiceExceptionHolder.ResourceNotFoundException(
