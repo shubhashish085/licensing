@@ -1,4 +1,6 @@
 package com.example.licensing.services;
 
-public class SuperUserService {
+import com.example.licensing.entities.SuperUser;
+
+public class SuperUserService extends BaseService<SuperUser>{
 }
