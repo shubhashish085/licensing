@@ -15,6 +15,8 @@ import javax.persistence.Table;
 @ToString
 public class SuperUser extends BaseEntity{
 
+    private String name;
+
     private String username;
 
     private String password;

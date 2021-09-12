@@ -2,11 +2,13 @@ package com.example.licensing.services;
 
 import com.example.licensing.entities.BaseEntity;
 import com.example.licensing.helpers.components.EventManagementComponent;
+import com.example.licensing.helpers.exceptions.ServiceExceptionHolder;
 import com.example.licensing.repositories.ServiceRepository;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 
 import java.beans.FeatureDescriptor;
 import java.lang.reflect.ParameterizedType;
@@ -23,24 +25,15 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
     private final ModelMapper modelMapper;
     private final EventManagementComponent eventManagementComponent;
 
-    <T> ServiceResponseDTO<T> generateResponse(ServiceRequestHeaderDTO header, List<T> data) {
-        return new ServiceResponseDTO<>(headerUtilComponent.getResponseHeaderDTO(header),
-                new HashMap<>(),
-                new ServiceResponseBodyDTO<>(data));
-    }
 
-    public  ServiceResponseDTO<D> getByOid(ServiceRequestDTO<OidHolderRequestBodyDTO> requestDTO) {
-        return generateResponse(requestDTO.getHeader(),
-                Collections.singletonList(convertForRead(getByOid(requestDTO.getBody().getOid()))));
-    }
 
-    public  ServiceResponseDTO<D> getList(ServiceRequestDTO<EmptyBodyDTO> requestDTO) {
-        return generateResponse(requestDTO.getHeader(), convertForRead(repository.findByIsDeleted("No")));
+    public List<D> getList() {
+        return convertForRead(repository.findByIsDeleted("No"));
     }
 
 
 
-    public  ServiceResponseDTO<D> getListByOidSet(ServiceRequestDTO<GetListByOidSetRequestBodyDTO> requestDTO) {
+    public  List<D> getListByOidSet(GetListByOidSetRequestBodyDTO requestDTO) {
         GetListByOidSetRequestBodyDTO body = requestDTO.getBody();
         Set<String> oids = body.getOids();
 
@@ -72,8 +65,8 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         }
     }
 
-    public  ServiceResponseDTO<D> create(ServiceRequestDTO<D> requestDTO) {
-        E e = convertForCreate(requestDTO.getBody());
+    public D create(D dto) {
+        E e = convertForCreate(dto);
         //e.setOid(requestDTO.getBody().getOid());
         // TODO: Remove Hard-Coded IDs
         e.setCreatedBy("System");
@@ -81,14 +74,12 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         e.setIsDeleted("No");
         E createdEntity = repository.save(e);
 
-        eventManagementComponent.publishCrudEvent(Pair.of(getEntityClass(), CrudEvent.CREATE), createdEntity.getOid());
-
-        return generateResponse(requestDTO.getHeader(), Collections.singletonList(convertForRead(createdEntity)));
+        return convertForRead(createdEntity);
     }
 
-    public  ServiceResponseDTO<D> update(ServiceRequestDTO<D> requestDTO) {
-        D body = requestDTO.getBody();
-        String oid = body.getOid();
+    public  D update(D dto) {
+
+        String oid = dto.getOid();
         if (oid == null)
             throw new ServiceExceptionHolder
                     .ResourceNotFoundDuringWriteRequestException("No Oid Provided for " + getEntityClass().getSimpleName());
@@ -99,31 +90,20 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         e.setIsDeleted("No");
         E updatedEntity = repository.save(e);
 
-        eventManagementComponent.publishCrudEvent(Pair.of(getEntityClass(), CrudEvent.UPDATE), updatedEntity.getOid());
-
-        return generateResponse(requestDTO.getHeader(), Collections.singletonList(convertForRead(updatedEntity)));
+        return convertForRead(updatedEntity);
     }
 
-    public  ServiceResponseDTO<D> deleteByOid(ServiceRequestDTO<OidHolderRequestBodyDTO> requestDTO) {
+    public D deleteByOid(OidHolderRequestBodyDTO requestDTO) {
         D d = deleteEntity(getByOidForWrite(requestDTO.getBody().getOid()));
-        return generateResponse(requestDTO.getHeader(), Collections.singletonList(d));
+        return d;
     }
 
     protected D deleteEntity(E e) {
-        eventManagementComponent.publishCrudEvent(Pair.of(getEntityClass(), CrudEvent.DELETE), e.getOid());
+
         e.setIsDeleted("Yes");
         repository.save(e);
-
-
         return convertForRead(e);
-
     }
-
-    public ServiceResponseDTO<D> search(ServiceRequestDTO<SearchDTO> requestDTO) {
-        List<E> results = repository.findAll(findByCriteria(requestDTO.getBody()));
-        return generateResponse(requestDTO.getHeader(), convertForRead(results));
-    }
-
 
     private E getByOid(@NonNull String oid) {
         return getOptionalEntity(oid).orElseThrow(() -> new ServiceExceptionHolder.ResourceNotFoundException(
@@ -157,11 +137,6 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
 
     protected E convertForUpdate(D d, E e) {
         BeanUtils.copyProperties(d, e);
-        return e;
-    }
-
-    protected E convertForUpdateIgnoreNull(D d, E e) {
-        BeanUtils.copyProperties(d, e, getNullPropertyNames(d));
         return e;
     }
 

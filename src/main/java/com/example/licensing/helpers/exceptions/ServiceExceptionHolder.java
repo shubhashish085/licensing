@@ -1,5 +1,9 @@
 package com.example.licensing.helpers.exceptions;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+
 public class ServiceExceptionHolder {
 
     @Getter
@@ -16,7 +20,6 @@ public class ServiceExceptionHolder {
     }
 
     public static class ResourceAlreadyExistsException extends  ServiceException{
-
         public ResourceAlreadyExistsException(String message){super(400,message);}
     }
 
