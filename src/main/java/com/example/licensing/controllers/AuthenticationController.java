@@ -1,4 +1,4 @@
 package com.example.licensing.controllers;
 
-public class LicenseEntityController {
+public class AuthenticationController {
 }
