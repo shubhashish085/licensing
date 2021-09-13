@@ -2,6 +2,7 @@ package com.example.licensing.services;
 
 import com.example.licensing.entities.BaseEntity;
 import com.example.licensing.helpers.components.EventManagementComponent;
+import com.example.licensing.helpers.dataclass.request.GetListByOidSetRequestBodyDTO;
 import com.example.licensing.helpers.exceptions.ServiceExceptionHolder;
 import com.example.licensing.repositories.ServiceRepository;
 import lombok.Data;
@@ -33,9 +34,8 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
 
 
 
-    public  List<D> getListByOidSet(GetListByOidSetRequestBodyDTO requestDTO) {
-        GetListByOidSetRequestBodyDTO body = requestDTO.getBody();
-        Set<String> oids = body.getOids();
+    public  List<D> getListByOidSet(GetListByOidSetRequestBodyDTO body) {
+        List<String> oids = body.getOids();
 
         List<E> eList = repository.findAllById(oids)
                 .stream()
@@ -45,7 +45,7 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
 
         handleStrictness(oids, eList, body.getStrict());
 
-        return generateResponse(requestDTO.getHeader(), convertForRead(eList));
+        return convertForRead(eList);
     }
 
     private void handleStrictness(Set<String> oids, List<E> eList, String strict) {
