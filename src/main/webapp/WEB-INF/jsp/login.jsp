@@ -31,21 +31,19 @@
       <meta property="og:image:width" content="1200">
       <meta property="og:image:height" content="600">
 
-      <!-- Meta -->
-      <meta name="description" content="ReMiMIS by Riviesoft">
-      <meta name="author" content="Riviesoft - Md Rasel Khan">
+
 
       <!-- Favicon -->
-      <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/resources/assets/favicon/favicon-32x32.png">
+      <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/resources/assets/favicon/apple-touch-icon.png">
       <!-- Favicons -->
       <link rel="apple-touch-icon" sizes="180x180" href="${contextPath}/resources/assets/favicon/apple-touch-icon.png">
-      <link rel="icon" type="image/png" sizes="32x32" href="${contextPath}/resources/assets/favicon/favicon-32x32.png">
-      <link rel="icon" type="image/png" sizes="16x16" href="${contextPath}/resources/assets/favicon/favicon-16x16.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="${contextPath}/resources/assets/favicon/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="${contextPath}/resources/assets/favicon/apple-touch-icon.png">
       <link rel="manifest" href="${contextPath}/resources/assets/favicon/site.webmanifest">
       <meta name="msapplication-TileColor" content="#da532c">
       <meta name="theme-color" content="#ffffff">
 
-      <title>ReMiMIS</title>
+      <title>Licensing</title>
 
       <!-- vendor css -->
       <link href="${contextPath}/resources/lib/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -61,11 +59,11 @@
 
     <header class="navbar navbar-header navbar-header-fixed">
           <div class="navbar-brand">
-            <a href="/login" class="df-logo">ReMi<span>MIS</span></a>
+            <a href="/login" class="df-logo">Dream Apps</a>
           </div><!-- navbar-brand -->
           <div id="navbarMenu" class="navbar-menu-wrapper">
             <div class="navbar-menu-header">
-              <a href="/login" class="df-logo">ReMi<span>MIS</span></a>
+              <a href="/login" class="df-logo">Dream Apps</a>
               <a id="mainMenuClose" href=""><i data-feather="x"></i></a>
             </div><!-- navbar-menu-header -->
 
@@ -111,14 +109,8 @@
 
        <footer class="footer pt-0 pb-0">
           <div>
-            <span>&copy; 2020 ReMiMIS</span>
-            <!--span>Developed by <a href="https://riviesoft.com">Riviesoft</a></span-->
-            <span class="ml-5 mr-5">Financed by <a href="https://europa.eu/"><img src="${contextPath}/resources/assets/img/europa-flag.gif" style="height:40px; width:auto;" /></a></span>
-            <span>Supported by <a href="https://bangladesh.iom.int/"><img src="${contextPath}/resources/assets/img/iom.png" style="height:40px; width:auto;" /></a></span>
-          </div>
-          <div>
             <nav class="nav">
-              Powered By&nbsp;<a href="https://www.codagecorp.com/">Codage Corporation Ltd</a>
+              Powered By&nbsp;<a href="https://www.dreamapps.com/">Dream Apps</a>
             </nav>
           </div>
         </footer>

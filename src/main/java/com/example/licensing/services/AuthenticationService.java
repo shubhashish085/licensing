@@ -1,10 +1,13 @@
 package com.example.licensing.services;
 
 import com.example.licensing.entities.SuperUser;
+import com.example.licensing.helpers.constants.Constants;
 import com.example.licensing.helpers.constants.Pages;
+import com.example.licensing.helpers.dataclass.common.LicenseEntityDTO;
 import com.example.licensing.helpers.dataclass.common.User;
 import com.example.licensing.repositories.SuperUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +15,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class AuthenticationService {
 
+    @Autowired
+    private LicenseEntityService licenseService;
+
     private final SuperUserRepository superUserRepository;
+
 
     public User getTheUser() {
 
@@ -55,7 +64,12 @@ public class AuthenticationService {
 
     public String welcome(ModelMap model) {
 
+        List<LicenseEntityDTO> licenseList = licenseService.getList();
+
         User user = getTheUser();
+
+        model.put(Constants.DATA,licenseList);
+        model.put(Constants.USER_INFO,user);
 
         return Pages.LICENSE_LIST;
     }

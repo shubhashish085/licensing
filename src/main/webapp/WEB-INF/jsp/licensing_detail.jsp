@@ -69,7 +69,7 @@
 
     <aside class="aside aside-fixed">
       <div class="aside-header">
-        <a href="${contextPath}/" class="aside-logo">ReMi<span>MIS</span></a>
+        <a href="${contextPath}/" class="aside-logo">Dream Apps</span></a>
         <a href="" class="aside-menu-link">
           <i data-feather="menu"></i>
           <i data-feather="x"></i>
@@ -85,15 +85,13 @@
           </div>
           <div class="aside-loggedin-user">
             <a href="#loggedinMenu" class="d-flex align-items-center justify-content-between mg-b-2" data-toggle="collapse">
-              <h6 class="tx-semibold mg-b-0">ReMiMIS Admin</h6>
+              <h6 class="tx-semibold mg-b-0">Admin</h6>
               <i data-feather="chevron-down"></i>
             </a>
             <p class="tx-color-03 tx-12 mg-b-0">Hello <c:out value="${name}"/></p>
           </div>
           <div class="collapse" id="loggedinMenu">
             <ul class="nav nav-aside mg-b-0">
-              <li class="nav-item"><a href="${contextPath}/user/changepassword?id=${userOid}" class="nav-link"><i data-feather="edit"></i> <span>Change Password</span></a></li>
-              <li class="nav-item"><a href="javascript: " class="nav-link"><i data-feather="help-circle"></i> <span>Help Center</span></a></li>
               <li class="nav-item"><a href="${contextPath}/logout" class="nav-link"><i data-feather="log-out"></i> <span>Sign Out</span></a></li>
             </ul>
           </div>
@@ -101,39 +99,6 @@
         <ul class="nav nav-aside">
 
           <li class="nav-item"><a href="${contextPath}/" class="nav-link"><i data-feather="globe"></i> <span>Dashboard</span></a></li>
-
-            <c:if test="${dataEntry || quickForm}">
-                <li class="nav-label mg-t-25">Data Entries</li>
-                <li class="nav-item"><a href="${contextPath}/list" class="nav-link"><i data-feather="pie-chart"></i> <span>All Entries</span></a>
-                </li>
-                <c:if test="${dataEntry}">
-                  <li class="nav-item"><a href="${contextPath}/form" class="nav-link"><i data-feather="life-buoy"></i>
-                    <span>New Data Entry</span></a>
-                  </li>
-                </c:if>
-                <c:if test="${quickForm}">
-                  <li class="nav-item"><a href="${contextPath}/form/shortform" class="nav-link"><i data-feather="layout"></i>
-                      <span>Checkpoint Form</span></a></li>
-                </c:if>
-            </c:if>
-
-
-            <c:if test="${reports}">
-                <li class="nav-label mg-t-25">Reports</li>
-                <li class="nav-item"><a href="${contextPath}/report/basicreprt" class="nav-link"><i
-                        data-feather="layers"></i> <span>Basic</span></a></li>
-                <li class="nav-item"><a href="${contextPath}/report/advancedreprt" class="nav-link"><i
-                        data-feather="box"></i> <span>Advanced</span></a></li>
-            </c:if>
-
-
-            <c:if test="${settings}">
-                <li class="nav-label mg-t-25">Settings</li>
-                <li class="nav-item"><a href="${contextPath}/user/userlist" class="nav-link"><i data-feather="user"></i>
-                    <span>Users</span></a></li>
-                <li class="nav-item active"><a href="${contextPath}/form/userform" class="nav-link"><i
-                        class="far fa-calendar-plus mr-4"></i> <span>Create New User</span></a></li>
-            </c:if>
 
 
             <li class="nav-label mg-t-25">Account</li>
@@ -161,56 +126,48 @@
         <div class="content-body" data-spy="scroll" data-target="#navSection" data-offset="120">
 
             <div class="container pd-x-0">
-                <h4 class="mg-b-10">Add New User</h4>
+                <h4 class="mg-b-10">Client</h4>
                 <p class="mg-b-30">Please fill all the required fields carefully and validate before submitting them to
                     server</p>
 
-                <form:form method="POST" action="/form/userform/save" modelAttribute="data">
+                <form:form method="POST" action="/license/details/save" modelAttribute="data">
 
-	                <div data-label="Create New User" class="df-example demo-forms">
+	                <div data-label="Create New Client" class="df-example demo-forms">
 
 	                    <div class="form-row">
 
                             <div  class="form-group col-md-4">
                                 <form:hidden path="oid"/>
-                                <form:label path="name">Name *</form:label>
-                                <form:input path="name" class="form-control" required="required" placeholder="Name"/>
+                                <form:label path="clientName">Client Name *</form:label>
+                                <form:input path="clientName" class="form-control" required="required" placeholder="Name"/>
                             </div>
 
                             <div  class="form-group col-md-4">
-                                <form:label path="username">UserName *</form:label>
-                                <form:input path="username" class="form-control" required="required" placeholder="Name"/>
+                                <form:label path="macAddress">MAC Address *</form:label>
+                                <form:input path="macAddress" class="form-control" required="required" placeholder="Name"/>
                             </div>
 
-
-	                        <div class="form-group col-md-4">
-	                            <form:label path="userType">UserType *</form:label>
-	                            <form:select path="userType" items="${userTypes}" class="custom-select"/>
-
 	                        </div>
-	                    </div>
-
-	                    <div class="form-row">
-
-	                        <div class="form-group col-md-4">
-	                            <form:label path="password">Password *</form:label>
-                                <form:input type="password" path="password" class="form-control" required="required" placeholder="Password"/>
-	                        </div>
-
-	                        <div class="form-group col-md-4">
-	                            <form:label path="confirmedPassword">Retype Password</form:label>
-                                <form:input type="password" path="confirmedPassword" class="form-control" required="required" placeholder="Retype Password"/>
-	                        </div>
-
-	                        <div class="form-group col-md-4">
-	                            <form:label path="status">Status *</form:label>
-                                <form:select path="status" items="${statuses}" class="custom-select"/>
-	                        </div>
+	                        <div id="startDateDiv" class="form-group col-md-4">
+                                <form:label path="startDate">Start Date*</form:label>
+                                <form:input path="startDate" id="startDateField" autocomplete="off"
+                                            class="form-control basic-datepicker" placeholder="Choose Date"/>
+                                <form:errors path="startDate" cssClass="error"></form:errors>
+                            </div>
+                            <div id="endDateDiv" class="form-group col-md-4">
+                                <form:label path="endDate">End Date*</form:label>
+                                <form:input path="endDate" id="endDateField" autocomplete="off"
+                                            class="form-control basic-datepicker" placeholder="Choose Date"/>
+                                <form:errors path="endDate" cssClass="error"></form:errors>
+                            </div>
 
 	                    </div>
 
-	                    <button class="btn btn-primary" type="submit">Submit</button>
-
+	                    <c:choose>
+                               <c:when test="${action == 'EDIT'}">
+                                   <button class="btn btn-primary" type="submit">Submit</button>
+                               </c:when>
+                        </c:choose>
 	                </div>
 
 
@@ -257,6 +214,9 @@
     <script src="${contextPath}/resources/lib/select2/js/select2.min.js"></script>
 
 
+    <script type="text/javascript" src="${contextPath}/resources/assets/js/pdfmake.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/resources/assets/js/vfs_fonts.js"></script>
+
     <script src="${contextPath}/resources/assets/js/dashforge.js"></script>
     <script src="${contextPath}/resources/assets/js/dashforge.aside.js"></script>
 
@@ -264,12 +224,19 @@
     <script src="https://cdnjs.com/libraries/mustache.js/"></script>
 
     <script>
-        $(document).ready(function () {
+
+           $(document).ready(function () {
+
+                $(".form-control.basic-datepicker").datepicker({
+                           "dateFormat": 'dd-M-yy'
+                       });
+
+           });
 
 
-
-        });
-
+           function getTdIssueDate() {
+               return $datepicker.val();
+           }
     </script>
 
 </body>

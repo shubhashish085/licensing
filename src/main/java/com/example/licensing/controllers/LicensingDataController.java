@@ -5,11 +5,15 @@ import com.example.licensing.helpers.constants.Constants;
 import com.example.licensing.helpers.dataclass.common.LicenseEntityDTO;
 import com.example.licensing.services.LicenseEntityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +21,13 @@ import javax.validation.Valid;
 public class LicensingDataController {
 
     private final LicenseEntityService licenseService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        dateFormat.setLenient(false);
+        webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @GetMapping(value = Api.LIST_URL)
     public String getTheList(ModelMap modelMap){

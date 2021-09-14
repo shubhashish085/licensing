@@ -77,7 +77,7 @@ public class LicenseEntityService extends BaseService<LicenseEntity, LicenseEnti
         model.put(Constants.DATA,super.getList());
         model.put(Constants.USER_INFO,user);
 
-        return Api.redirect(Api.LIST_URL);
+        return Api.redirect(Api.LICENSE_URL + Api.LIST_URL);
     }
 
 
