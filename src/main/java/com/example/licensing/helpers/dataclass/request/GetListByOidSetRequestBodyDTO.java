@@ -9,4 +9,6 @@ import java.util.List;
 public class GetListByOidSetRequestBodyDTO implements IRequestBodyDTO {
 
     private List<String> oids;
+
+    private String strict;
 }

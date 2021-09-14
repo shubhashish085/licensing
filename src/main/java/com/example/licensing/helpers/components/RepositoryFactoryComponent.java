@@ -2,9 +2,12 @@ package com.example.licensing.helpers.components;
 
 import com.example.licensing.entities.BaseEntity;
 import com.example.licensing.repositories.ServiceRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+
 
 @Component
 @RequiredArgsConstructor

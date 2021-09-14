@@ -1,6 +1,7 @@
 package com.example.licensing.helpers.components;
 
 import com.example.licensing.entities.BaseEntity;
+import com.example.licensing.helpers.exceptions.ServiceExceptionHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

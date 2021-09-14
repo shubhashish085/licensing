@@ -1,8 +1,9 @@
 package com.example.licensing.services;
 
 import com.example.licensing.entities.BaseEntity;
-import com.example.licensing.helpers.components.EventManagementComponent;
 import com.example.licensing.helpers.dataclass.request.GetListByOidSetRequestBodyDTO;
+import com.example.licensing.helpers.dataclass.request.IOidHolderRequestBodyDTO;
+import com.example.licensing.helpers.dataclass.request.OidHolderRequestBodyDTO;
 import com.example.licensing.helpers.exceptions.ServiceExceptionHolder;
 import com.example.licensing.repositories.ServiceRepository;
 import lombok.Data;
@@ -11,11 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 
-import java.beans.FeatureDescriptor;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Data
@@ -24,15 +23,10 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
 
     private final ServiceRepository<E> repository;
     private final ModelMapper modelMapper;
-    private final EventManagementComponent eventManagementComponent;
-
-
 
     public List<D> getList() {
         return convertForRead(repository.findByIsDeleted("No"));
     }
-
-
 
     public  List<D> getListByOidSet(GetListByOidSetRequestBodyDTO body) {
         List<String> oids = body.getOids();
@@ -48,7 +42,7 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         return convertForRead(eList);
     }
 
-    private void handleStrictness(Set<String> oids, List<E> eList, String strict) {
+    private void handleStrictness(List<String> oids, List<E> eList, String strict) {
         if (strict != null && strict.equals("Yes") && eList.size() < oids.size()) {
             Map<String, Boolean> oidMap = new HashMap<>();
             List<String> missingList = new ArrayList<>();
@@ -67,8 +61,6 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
 
     public D create(D dto) {
         E e = convertForCreate(dto);
-        //e.setOid(requestDTO.getBody().getOid());
-        // TODO: Remove Hard-Coded IDs
         e.setCreatedBy("System");
         e.setCreatedOn(new Date());
         e.setIsDeleted("No");
@@ -84,7 +76,7 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
             throw new ServiceExceptionHolder
                     .ResourceNotFoundDuringWriteRequestException("No Oid Provided for " + getEntityClass().getSimpleName());
         E e = getByOidForWrite(oid);
-        convertForUpdate(body, e);
+        convertForUpdate(dto, e);
         e.setUpdatedBy("System");
         e.setUpdatedOn(new Date());
         e.setIsDeleted("No");
@@ -93,8 +85,8 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         return convertForRead(updatedEntity);
     }
 
-    public D deleteByOid(OidHolderRequestBodyDTO requestDTO) {
-        D d = deleteEntity(getByOidForWrite(requestDTO.getBody().getOid()));
+    public D deleteByOid(OidHolderRequestBodyDTO dto) {
+        D d = deleteEntity(getByOidForWrite(dto.getOid()));
         return d;
     }
 
@@ -105,7 +97,7 @@ public abstract class BaseService<E extends BaseEntity, D extends IOidHolderRequ
         return convertForRead(e);
     }
 
-    private E getByOid(@NonNull String oid) {
+    protected E getByOid(@NonNull String oid) {
         return getOptionalEntity(oid).orElseThrow(() -> new ServiceExceptionHolder.ResourceNotFoundException(
                 "No " + getEntityClass().getSimpleName() + " Found with ID: " + oid));
     }

@@ -15,6 +15,8 @@ import java.util.Date;
 @ToString
 public class LicenseEntity extends BaseEntity{
 
+    private String clientName;
+
     private String macAddress;
 
     private String generatedToken;

@@ -3,6 +3,8 @@ package com.example.licensing.helpers.validators.annotations;
 import com.example.licensing.entities.BaseEntity;
 import com.example.licensing.helpers.validators.implementations.EntityOidValidityCheckerExtended;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

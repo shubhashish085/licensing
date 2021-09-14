@@ -9,7 +9,9 @@ import java.util.Optional;
 
 @NoRepositoryBean
 public interface ServiceRepository<E extends BaseEntity> extends JpaRepository<E, String> {
+
     Optional<E> findByOidAndIsDeleted(String oid, String isDeleted);
     List<E> findByIsDeleted(String isDeleted);
+    List<E> findByOidIn(List<String> oids);
 
 }

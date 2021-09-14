@@ -1,4 +1,10 @@
 package com.example.licensing.helpers.dataclass.request;
 
-public class OidHolderRequestBodyDTO {
+import lombok.Data;
+
+@Data
+public class OidHolderRequestBodyDTO implements IOidHolderRequestBodyDTO{
+
+    private String oid;
+
 }

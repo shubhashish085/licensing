@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SuperUserRepository extends ServiceRepository<SuperUser> {
 
+    SuperUser findByUsernameAndIsDeleted(String username,String isDeleted);
 }
