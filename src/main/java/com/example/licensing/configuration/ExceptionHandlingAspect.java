@@ -14,13 +14,18 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class ExceptionHandlingAspect {
 
-    @AfterThrowing(pointcut = "execution(* com.cokreates.payroll.*.*.*(..))", throwing = "ex")
+    @AfterThrowing(pointcut = "execution(* com.example.licensing.*.*.*(..))", throwing = "ex")
     public void logBasePackageError(Exception ex) {
         logException(ex);
     }
 
-    @AfterThrowing(pointcut = "execution(* com.cokreates.payroll.*.*.*(..))", throwing = "ex")
+    @AfterThrowing(pointcut = "execution(* com.example.licensing.*.*.*.*(..))", throwing = "ex")
     public void logHelperError(Exception ex) {
+        logException(ex);
+    }
+
+    @AfterThrowing(pointcut = "execution(* com.example.licensing.*.*.*.*.*(..))", throwing = "ex")
+    public void logValidatorError(Exception ex) {
         logException(ex);
     }
 
@@ -30,7 +35,7 @@ public class ExceptionHandlingAspect {
         log.error("MESSAGE: " + ex.getMessage());
 
         Arrays.stream(ex.getStackTrace())
-                .filter(element -> element.getClassName().startsWith("com.cokreates.payroll"))
+                .filter(element -> element.getClassName().startsWith("com.example.licensing"))
                 .map(StackTraceElement::toString)
                 .forEach(log::error);
     }

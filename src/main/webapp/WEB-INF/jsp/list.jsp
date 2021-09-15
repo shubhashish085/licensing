@@ -27,8 +27,6 @@
         <meta property="og:image:height" content="600">
 
         <!-- Meta -->
-        <meta name="description" content="ReMiMIS by Riviesoft">
-        <meta name="author" content="Riviesoft - Md Rasel Khan">
 
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/resources/assets/favicon/apple-touch-icon.png">
@@ -81,13 +79,7 @@
                 </a>
                 <p class="tx-color-03 tx-12 mg-b-0">Hello <c:out value="${name}"/></p>
               </div>
-              <div class="collapse" id="loggedinMenu">
-                <ul class="nav nav-aside mg-b-0">
-                  <li class="nav-item"><a href="${contextPath}/user/changepassword?id=${userOid}" class="nav-link"><i data-feather="edit"></i> <span>Change Password</span></a></li>
-                  <li class="nav-item"><a href="javascript: " class="nav-link"><i data-feather="help-circle"></i> <span>Help Center</span></a></li>
-                  <li class="nav-item"><a href="${contextPath}/logout" class="nav-link"><i data-feather="log-out"></i> <span>Sign Out</span></a></li>
-                </ul>
-              </div>
+
             </div><!-- aside-loggedin -->
             <ul class="nav nav-aside">
 

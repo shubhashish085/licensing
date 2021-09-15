@@ -19,7 +19,7 @@ public class LicenseEntity extends BaseEntity{
 
     private String macAddress;
 
-    private String generatedToken;
+    private String token;
 
     private Date startDate;
 

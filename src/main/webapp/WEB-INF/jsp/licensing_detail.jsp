@@ -136,31 +136,35 @@
 
 	                    <div class="form-row">
 
-                            <div  class="form-group col-md-4">
+                            <div  class="form-group col-md-6">
                                 <form:hidden path="oid"/>
-                                <form:label path="clientName">Client Name *</form:label>
+                                <form:label path="clientName">Client Name*</form:label>
                                 <form:input path="clientName" class="form-control" required="required" placeholder="Name"/>
                             </div>
 
-                            <div  class="form-group col-md-4">
-                                <form:label path="macAddress">MAC Address *</form:label>
-                                <form:input path="macAddress" class="form-control" required="required" placeholder="Name"/>
+                            <div  class="form-group col-md-6">
+                                <form:label path="macAddress">MAC Address*</form:label>
+                                <form:input path="macAddress" class="form-control" required="required" placeholder="XX-XX-XX-XX-XX-XX"/>
                             </div>
+                        </div>
 
-	                        </div>
-	                        <div id="startDateDiv" class="form-group col-md-4">
+                        <div class="form-row">
+                            <div  class="form-group col-md-12">
+                                <form:label path="token">Token*</form:label>
+                                <form:input path="token" class="form-control" required="required" placeholder="Token"/>
+                            </div>
+	                    </div>
+	                    <div class="form-row">
+	                        <div id="startDateDiv" class="form-group col-md-6">
                                 <form:label path="startDate">Start Date*</form:label>
                                 <form:input path="startDate" id="startDateField" autocomplete="off"
                                             class="form-control basic-datepicker" placeholder="Choose Date"/>
-                                <form:errors path="startDate" cssClass="error"></form:errors>
                             </div>
-                            <div id="endDateDiv" class="form-group col-md-4">
-                                <form:label path="endDate">End Date*</form:label>
+                            <div id="endDateDiv" class="form-group col-md-6">
+                                <form:label path="endDate">End Date</form:label>
                                 <form:input path="endDate" id="endDateField" autocomplete="off"
                                             class="form-control basic-datepicker" placeholder="Choose Date"/>
-                                <form:errors path="endDate" cssClass="error"></form:errors>
                             </div>
-
 	                    </div>
 
 	                    <c:choose>

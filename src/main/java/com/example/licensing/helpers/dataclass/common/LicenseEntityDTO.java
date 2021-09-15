@@ -15,15 +15,16 @@ public class LicenseEntityDTO implements IOidHolderRequestBodyDTO {
     @ValidEntityOid(LicenseEntity.class)
     private String oid;
 
-    @NotBlank
+    @NotBlank(message = "Client Name can not be empty")
     private String clientName;
 
-    @NotBlank
+    @NotBlank(message = "Mac Address can not be empty")
     private String macAddress;
 
-    private String generatedToken;
+    @NotBlank(message = "Token can not be empty")
+    private String token;
 
-    @NotNull
+    @NotNull(message =  "Start Date can not be empty")
     private Date startDate;
 
     private Date endDate;
